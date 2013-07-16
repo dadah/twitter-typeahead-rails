@@ -494,15 +494,7 @@
                 }
                 utils.each(shortestList, function(i, id) {
                     var item = that.itemHash[id], isCandidate, isMatch;
-                    isCandidate = utils.every(lists, function(list) {
-                        return ~utils.indexOf(list, id);
-                    });
-                    isMatch = isCandidate && utils.every(terms, function(term) {
-                        return utils.some(item.tokens, function(token) {
-                            return token.indexOf(term) === 0;
-                        });
-                    });
-                    isMatch && suggestions.push(item);
+                    suggestions.push(item)
                 });
                 return suggestions;
             },
