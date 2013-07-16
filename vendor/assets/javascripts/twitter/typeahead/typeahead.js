@@ -474,27 +474,13 @@
                 });
             },
             _getLocalSuggestions: function(terms) {
-                var that = this, firstChars = [], lists = [], shortestList, suggestions = [];
-                utils.each(terms, function(i, term) {
-                    var firstChar = term.charAt(0);
-                    !~utils.indexOf(firstChars, firstChar) && firstChars.push(firstChar);
-                });
-                utils.each(firstChars, function(i, firstChar) {
-                    var list = that.adjacencyList[firstChar];
-                    if (!list) {
-                        return false;
-                    }
-                    lists.push(list);
-                    if (!shortestList || list.length < shortestList.length) {
-                        shortestList = list;
-                    }
-                });
-                if (lists.length < firstChars.length) {
-                    return [];
+                var that = this, firstChars = [], lists = [], shortestList = [], suggestions = [];
+                utils.each(that.adjacencyList, function(character, list) {
+                  shortestList.concat(list)
                 }
                 utils.each(shortestList, function(i, id) {
                     var item = that.itemHash[id], isCandidate, isMatch;
-                    suggestions.push(item)
+                    suggestions.push(item);
                 });
                 return suggestions;
             },
@@ -972,9 +958,9 @@
                 }
                 utils.each(this.datasets, function(i, dataset) {
                     dataset.getSuggestions(query, function(suggestions) {
-                      /*if (query === that.inputView.getQuery()) {*/
+                        if (query === that.inputView.getQuery()) {
                             that.dropdownView.renderSuggestions(dataset, suggestions);
-                            /*}*/
+                        }
                     });
                 });
             },
